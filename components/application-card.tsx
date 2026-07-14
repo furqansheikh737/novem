@@ -25,7 +25,8 @@ export default function ApplicationCard({
         <Image
           src={image}
           sizes="(max-width:768px) 100vw, 50vw"
-          alt={title}
+          alt={`${title} application`}
+          loading="lazy"
           fill
           className="object-cover transition duration-500 hover:scale-110"
         />

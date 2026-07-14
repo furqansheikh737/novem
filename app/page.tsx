@@ -7,14 +7,21 @@ import WhyNovem from "@/components/why-novem";
 import CTA from "@/components/cta";
 import Footer from "@/components/footer";
 import Contact from "@/components/contact";
+import BackToTop from "@/components/back-to-top";
+import About from "@/components/about";
+import ScrollProgress from "@/components/scroll-progress";
 
 export default function HomePage() {
   return (
     <>
+      <ScrollProgress />
+
       <Navbar />
 
       <main>
         <Hero />
+
+        <About />
 
         <Applications />
 
@@ -28,6 +35,8 @@ export default function HomePage() {
 
         <Contact />
       </main>
+
+      <BackToTop />
 
       <Footer />
     </>

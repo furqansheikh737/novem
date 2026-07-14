@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function CTA() {
   return (
@@ -42,7 +43,11 @@ export default function CTA() {
           whileTap={{ scale: 0.98 }}
           className="mt-10"
         >
-          <Button>Start A Project</Button>
+          <Link href="#contact">
+            <Button className="rounded-full bg-[#B8794B] px-8 py-6 text-base hover:bg-[#9E683E]">
+              Start A Project
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </section>

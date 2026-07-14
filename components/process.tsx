@@ -50,7 +50,7 @@ export default function Process() {
       <div className="container-custom">
 
         <SectionHeading
-          subtitle="Our Process"
+          subtitle="CAPABILITIES"
           title="Closed Loop Manufacturing"
         />
 

@@ -26,9 +26,9 @@ export default function HeroSlider() {
         {slides.map((src, index) => (
           <Image
             key={src}
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 1024px) 100vw, 50vw"
             src={src}
-            alt=""
+            alt="Industrial freeze drying facility"
             fill
             priority={index === 0}
             className={`object-cover transition-opacity duration-700 ${

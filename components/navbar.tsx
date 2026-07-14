@@ -19,11 +19,67 @@ const links = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("Home");
 
   useEffect(() => {
-    const handle = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handle);
-    return () => window.removeEventListener("scroll", handle);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+
+      const sections = [
+        "about",
+        "applications",
+        "capabilities",
+        "services",
+        "why",
+      ];
+
+      let current = "Home";
+
+      sections.forEach((id) => {
+        const section = document.getElementById(id);
+
+        if (!section) return;
+
+        const top = section.offsetTop - 120;
+        const bottom = top + section.offsetHeight;
+
+        if (window.scrollY >= top && window.scrollY < bottom) {
+          switch (id) {
+            case "about":
+              current = "About";
+              break;
+
+            case "applications":
+              current = "Applications";
+              break;
+
+            case "capabilities":
+              current = "Capabilities";
+              break;
+
+            case "services":
+              current = "Services";
+              break;
+
+            case "why":
+              current = "Why Novem";
+              break;
+          }
+        }
+      });
+
+      if (window.scrollY < 100) {
+        current = "Home";
+      }
+
+      setActiveSection(current);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -40,12 +96,14 @@ export default function Navbar() {
       <div className="container-custom flex h-20 items-center justify-between">
         <Logo />
 
-        <DesktopNav />
+        <DesktopNav activeSection={activeSection} />
 
         <div className="hidden lg:block">
-          <Button className="rounded-full bg-[#B8794B] hover:bg-[#9f683f] px-7">
-            Contact
-          </Button>
+          <Link href="#contact">
+            <Button className="rounded-full bg-[#B8794B] hover:bg-[#9f683f] px-7">
+              Contact
+            </Button>
+          </Link>
         </div>
 
         <MobileNav />
@@ -69,14 +127,18 @@ function Logo() {
   );
 }
 
-function DesktopNav() {
+function DesktopNav({ activeSection }: { activeSection: string }) {
   return (
     <nav className="hidden lg:flex gap-8">
       {links.map((item) => (
         <Link
           key={item.label}
           href={item.href}
-          className="relative text-sm font-medium transition hover:text-[#B8794B] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-[#B8794B] after:transition-all hover:after:w-full"
+          className={`relative text-sm font-medium transition-all duration-300 after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:bg-[#B8794B] after:transition-all ${
+            activeSection === item.label
+              ? "text-[#B8794B] after:w-full"
+              : "text-[#2D2B2A] hover:text-[#B8794B] after:w-0 hover:after:w-full"
+          }`}
         >
           {item.label}
         </Link>
@@ -93,20 +155,11 @@ function MobileNav() {
           <Menu className="h-6 w-6 text-[#A86C42]" />
         </SheetTrigger>
 
-        <SheetContent
-          side="right"
-          className="w-full bg-[#F8F4EF] p-0"
-        >
+        <SheetContent side="right" className="w-full bg-[#F8F4EF] p-0">
           <div className="flex h-full flex-col">
-
             {/* Logo */}
             <div className="flex items-center justify-between border-b border-[#E7D8C9] px-6 py-5">
-              <Image
-                src="/logo.png"
-                alt="Novem"
-                width={150}
-                height={40}
-              />
+              <Image src="/logo.png" alt="Novem" width={150} height={40} />
             </div>
 
             {/* Links */}
@@ -124,11 +177,12 @@ function MobileNav() {
 
             {/* Bottom Button */}
             <div className="border-t border-[#E7D8C9] p-6">
-              <Button className="w-full">
-                Contact
-              </Button>
+              <Link href="#contact">
+                <Button className="mt-4 rounded-full bg-[#B8794B] w-full">
+                  Contact
+                </Button>
+              </Link>
             </div>
-
           </div>
         </SheetContent>
       </Sheet>
